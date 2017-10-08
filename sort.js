@@ -48,6 +48,41 @@ function cocktailSort(a) {
   }
 }
 
+// Adapted from http://blog.mgechev.com/2012/11/24/javascript-sorting-performance-quicksort-v8/
+function heapSort(array) {
+  function heapify(array, index, heapSize) {
+    var left = 2 * index + 1;
+    var right = 2 * index + 2;
+    var largest = index;
+    if (left < heapSize && test(array, left, index) > 0) {
+      largest = left;
+    }
+    if (right < heapSize && test(array, right, largest) > 0) {
+      largest = right;
+    }
+    if (largest !== index) {
+      swap(array, index, largest);
+      heapify(array, largest, heapSize);
+    }
+  }
+
+  function buildMaxHeap(array) {
+    for (var i = Math.floor(array.length / 2); i >= 0; i -= 1) {
+      heapify(array, i, array.length);
+    }
+    return array;
+  }
+
+  var size = array.length;
+  var temp;
+  buildMaxHeap(array);
+  for (var i = array.length - 1; i > 0; i -= 1) {
+    swap(array, 0, i);
+    size -= 1;
+    heapify(array, 0, size);
+  }
+}
+
 function insertionSort(a) {
   var n = a.length;
   for (var i = 1; i < n; i++) {
