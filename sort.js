@@ -153,6 +153,27 @@ function selectionSort(a) {
   }
 }
 
+// Adapted from https://stackoverflow.com/q/29501448/623816
+var shellSort = function (array) {
+  var length = array.length;
+  var h = 1;
+  while (h < length / 3) {
+    h = 3 * h + 1;
+  }
+  while (h > 0) {
+    for (var i = h; i < length; i++) {
+      for (var j = i; j > 0 && array[j] < array[j - h]; j -= h) {
+        // TODO: Find out, why using "test(array, j, j - h) < 0"
+        // above does not finish the visualisation correctly.
+        self.postMessage(['test', j, j - h]);
+        swap(array, j, j - h);
+      }
+    }
+    h = --h / 3;
+  }
+  return array;
+}
+
 self.onmessage = function(event) {
   var sort = eval(event.data[0]);
   sort(event.data[1], 'middle');
