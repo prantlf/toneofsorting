@@ -73,6 +73,37 @@ function oddEvenSort(a) {
   }
 }
 
+// Adapted from https://www.nczonline.net/blog/2012/11/27/computer-science-in-javascript-quicksort/
+function quickSort(arr) {
+  function quickSort(arr, left, right) {
+    var len = arr.length;
+    var pivot;
+    var partitionIndex;
+    if (left < right) {
+      pivot = right;
+      partitionIndex = partition(arr, pivot, left, right);
+
+      quickSort(arr, left, partitionIndex - 1);
+      quickSort(arr, partitionIndex + 1, right);
+    }
+    return arr;
+  }
+
+  function partition(arr, pivot, left, right) {
+    var partitionIndex = left;
+    for (var i = left; i < right; i++) {
+      if (test(arr, i, pivot) < 0) {
+        swap(arr, i, partitionIndex);
+        partitionIndex++;
+      }
+    }
+    swap(arr, right, partitionIndex);
+    return partitionIndex;
+  }
+
+  quickSort(arr, 0, arr.length - 1);
+}
+
 function selectionSort(a) {
   var n = a.length;
   for (var i = 0; i < n - 1; i++) {
